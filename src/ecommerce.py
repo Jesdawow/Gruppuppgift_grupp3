@@ -15,6 +15,9 @@ class Ecommerce_Analysis:
         self.data = coerce_data_types(df) # Makes sure all the datatypes are correct (from io_utils)
 
     def summary(self):
-        print(f"Total revenue: {total_revenue(self.data)}")
+        print(f"Total revenue: {total_revenue(self.data):,.0f} kr")
         print(f"Average Order Value: {average_order_value}")
+        print(f"Total units sold: {total_units(self.data):,.2f} kr")
+    def top_categories(self, n=3):
+        return revenue_by_category(self.data).head(n)
     

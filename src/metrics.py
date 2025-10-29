@@ -11,4 +11,4 @@ def total_units(df):
 def revenue_by_category(df):
     return df.groupby("category")["revenue"].sum().sort_values(ascending=False)
 def revenue_by_city(df):
-    return df.groupby("City")["revenue"].sum().sort_values(ascending=False)
+    return df.groupby("city")["revenue"].sum().sort_values(ascending=False)
