@@ -1,4 +1,5 @@
 import pandas as pd
+from src.paths import ECOMMERCE_FILE
 
 REQUIRED = ["order_id", "date", "city", "category", "price", "units", "revenue"]
 
