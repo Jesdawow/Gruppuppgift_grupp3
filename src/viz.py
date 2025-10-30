@@ -1,5 +1,56 @@
 # File to create all graphs & charts.
 
+from cProfile import label
 import matplotlib.pyplot as plt
-from src.metrics import revenue_by_category,revenue_over_time 
+# from src.metrics import revenue_by_category,revenue_over_time 
 # Imports functions from metrics to plot the data in viz
+
+import pandas as pd
+
+
+def _cat_for_plot(s, missing_label="Okänd"):
+    if not hasattr(s, "where"):
+        s = pd.Series(s, dtype="object")
+    else:
+        s = s.astype("object")
+    s = s.where(~pd.isna(s), other=missing_label)
+    return s
+
+
+# def _cat_for_plot(s, missing_label="Okänd"):
+#     if hasattr(s, "astype"):
+#         s = s.astype("object")
+#     try:
+#         return s.fillna(missing_label)
+#     except Exception:
+#         return s
+
+def _num_for_plot(s):
+    try:
+        return pd.to_numeric(s, errors="coerce").fillna(0)
+    except Exception:
+        return s
+
+def bar(ax, x, y, title, xlabel, ylabel, grid: bool = True, label=None):
+    x = _cat_for_plot(x)
+    y = _num_for_plot(y)
+    ax.bar(x, y)
+    if label:
+        ax.legend()
+    ax.set_title(title)
+    ax.set_xlabel(xlabel)
+    ax.set_ylabel(ylabel)
+    ax.grid(grid, axis="y")
+    return ax
+
+def line(ax, x, y, title, xlabel, ylabel, grid: bool = True, label=None):
+    x = _cat_for_plot(x)
+    y = _num_for_plot(y)
+    ax.plot(x, y, marker="o", linestyle="-")
+    if label:
+        ax.legend()
+    ax.set_title(title)
+    ax.set_xlabel(xlabel)
+    ax.set_ylabel(ylabel)
+    ax.grid(grid, axis="y")
+    return ax
