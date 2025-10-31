@@ -29,3 +29,6 @@ def check_revenue_integrity(df: pd.DataFrame) -> bool:
     # Controls that revenue = price * units in all rows (Not meant to be used, just to check)
     calculated = df["price"].to_numpy() * df["units"].to_numpy()
     return np.allclose(df["revenue"].to_numpy(), calculated)
+def average_price_by_category(df: pd.DataFrame) -> pd.Series:
+    # Returns average price per category
+    return df.groupby("category", observed=True)["price"].mean().sort_values(ascending=False)
