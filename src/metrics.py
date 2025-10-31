@@ -29,3 +29,5 @@ def check_revenue_integrity(df: pd.DataFrame) -> bool:
     # Controls that revenue = price * units in all rows (Not meant to be used, just to check)
     calculated = df["price"].to_numpy() * df["units"].to_numpy()
     return np.allclose(df["revenue"].to_numpy(), calculated)
+def top_cities(df, n =int):
+    return ((df.groupby("city")["revenue"].agg("sum").sort_values(ascending=False).head(n))/1000).round(1)
