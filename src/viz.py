@@ -7,6 +7,8 @@ import matplotlib.pyplot as plt
 
 import pandas as pd
 
+from src.metrics import revenue_by_category
+
 
 def _cat_for_plot(s, missing_label="Okänd"):
     if not hasattr(s, "where"):
@@ -42,6 +44,13 @@ def bar(ax, x, y, title, xlabel, ylabel, grid: bool = True, label=None):
     ax.set_ylabel(ylabel)
     ax.grid(grid, axis="y")
     return ax
+
+# Revenue by category bar plot
+def plt_revenue_by_category(df):
+    revenue_cat = revenue_by_category(df)
+    fig, ax = plt.subplots(figsize=(9, 4))
+    bar(ax, revenue_cat["category"], revenue_cat["revenue"]/1000, "Revenue per category", "Category", "Revenue (kSEK)")
+    plt.show()
 
 def line(ax, x, y, title, xlabel, ylabel, grid: bool = True, label=None):
     x = _cat_for_plot(x)
