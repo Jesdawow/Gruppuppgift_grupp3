@@ -32,3 +32,6 @@ def coerce_data_types(df: pd.DataFrame) -> pd.DataFrame:
     out["price"] = pd.to_numeric(out["price"], errors="coerce") #.astype("Float64")  
     out["revenue"] = pd.to_numeric(out["revenue"], errors="coerce") #.astype("Float64") 
     return out
+
+def top_cities(df, n =int):
+    return ((df.groupby("city")["revenue"].agg("sum").sort_values(ascending=False).head(n))/1000).round(1)
