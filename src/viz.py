@@ -1,14 +1,8 @@
 # File to create all graphs & charts.
 
-from cProfile import label
 import matplotlib.pyplot as plt
-# from src.metrics import revenue_by_category,revenue_over_time 
-# Imports functions from metrics to plot the data in viz
-
+from src.metrics import revenue_over_time, revenue_by_category
 import pandas as pd
-
-from src.metrics import revenue_by_category
-
 
 def _cat_for_plot(s, missing_label="Okänd"):
     if not hasattr(s, "where"):
@@ -35,26 +29,20 @@ def plt_revenue_by_category(df):
     ax.set_xlabel("Category")
     ax.set_ylabel("Revenue (kSEK)")
     ax.grid(True, axis="y")
-
+    plt.savefig("images/fig_revenue_by_category.png", dpi=200)
     plt.show()
+    
 
 
-# def bar(ax, x, y, title, xlabel, ylabel, grid: bool = True, label=None):
-#     x = _cat_for_plot(x)
-#     y = _num_for_plot(y)
-#     ax.bar(x, y)
-#     if label:
-#         ax.legend()
-#     ax.set_title(title)
-#     ax.set_xlabel(xlabel)
-#     ax.set_ylabel(ylabel)
-#     ax.grid(grid, axis="y")
-#     return ax
+def plot_revenue_over_time(df):
+    monthly_revenue = revenue_over_time(df, freq='ME')
 
-# # Revenue by category bar plot
-# def plt_revenue_by_category(df):
-#     revenue_cat = revenue_by_category(df)
-#     fig, ax = plt.subplots(figsize=(9, 4))
-#     bar(ax, revenue_cat["category"], revenue_cat["revenue"]/1000, "Revenue per category", "Category", "Revenue (kSEK)")
-#     plt.show()
-
+    plt.figure(figsize=(10, 6))
+    plt.plot(monthly_revenue.index.astype(str), monthly_revenue.values, marker='o', linestyle='-')
+    plt.title("Intäkt över tid (per månad)")
+    plt.xlabel("Månad")
+    plt.ylabel("Intäkt (kr)")
+    plt.xticks(rotation=45)
+    plt.grid(True)
+    plt.tight_layout()
+    plt.show()
