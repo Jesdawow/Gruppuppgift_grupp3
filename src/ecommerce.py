@@ -33,6 +33,6 @@ class Ecommerce_Analysis:
         return revenue_by_category(self.data).head(n)
     def top_cities(self, n=3):
         # Returns the most cities with the most profit (n)
-        return revenue_by_city(self.data).head(n)
+        return ((revenue_by_city(self.data).head(n))/1000).round(1)
     
     
