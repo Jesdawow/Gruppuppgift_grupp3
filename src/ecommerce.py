@@ -10,6 +10,9 @@ from src.metrics import( # Loads everything from metrics
     order_value_std,
     check_revenue_integrity
 )
+from src.viz import ( # Loads everything from viz
+    plot_revenue_over_time
+)
 from src.paths import ECOMMERCE_FILE # Loads the file path from paths
 
 class Ecommerce_Analysis:
@@ -34,5 +37,10 @@ class Ecommerce_Analysis:
     def top_cities(self, n=3):
         # Returns the most cities with the most profit (n)
         return revenue_by_city(self.data).head(n)
-    
-    
+    def plot_revenue_over_time(self):
+        # plots revenue_over_time directly from viz
+        plot_revenue_over_time(self.data)
+    # Tänk på att vi måste importa dem i import src.viz sen namnet på def.
+    #def plot_revenue_by_category(self):
+    #def plot_revenue_by_city(self):
+    #def plot_average_price_by_category(self):
