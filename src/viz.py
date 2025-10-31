@@ -18,48 +18,43 @@ def _cat_for_plot(s, missing_label="Okänd"):
     s = s.where(~pd.isna(s), other=missing_label)
     return s
 
-
-# def _cat_for_plot(s, missing_label="Okänd"):
-#     if hasattr(s, "astype"):
-#         s = s.astype("object")
-#     try:
-#         return s.fillna(missing_label)
-#     except Exception:
-#         return s
-
 def _num_for_plot(s):
     try:
         return pd.to_numeric(s, errors="coerce").fillna(0)
     except Exception:
         return s
 
-def bar(ax, x, y, title, xlabel, ylabel, grid: bool = True, label=None):
-    x = _cat_for_plot(x)
-    y = _num_for_plot(y)
-    ax.bar(x, y)
-    if label:
-        ax.legend()
-    ax.set_title(title)
-    ax.set_xlabel(xlabel)
-    ax.set_ylabel(ylabel)
-    ax.grid(grid, axis="y")
-    return ax
-
-# Revenue by category bar plot
 def plt_revenue_by_category(df):
     revenue_cat = revenue_by_category(df)
     fig, ax = plt.subplots(figsize=(9, 4))
-    bar(ax, revenue_cat["category"], revenue_cat["revenue"]/1000, "Revenue per category", "Category", "Revenue (kSEK)")
+
+    x = _cat_for_plot(revenue_cat.index)
+    y = _num_for_plot(revenue_cat.values / 1000)
+    ax.bar(x, y)
+    ax.set_title("Revenue per category")
+    ax.set_xlabel("Category")
+    ax.set_ylabel("Revenue (kSEK)")
+    ax.grid(True, axis="y")
+
     plt.show()
 
-def line(ax, x, y, title, xlabel, ylabel, grid: bool = True, label=None):
-    x = _cat_for_plot(x)
-    y = _num_for_plot(y)
-    ax.plot(x, y, marker="o", linestyle="-")
-    if label:
-        ax.legend()
-    ax.set_title(title)
-    ax.set_xlabel(xlabel)
-    ax.set_ylabel(ylabel)
-    ax.grid(grid, axis="y")
-    return ax
+
+# def bar(ax, x, y, title, xlabel, ylabel, grid: bool = True, label=None):
+#     x = _cat_for_plot(x)
+#     y = _num_for_plot(y)
+#     ax.bar(x, y)
+#     if label:
+#         ax.legend()
+#     ax.set_title(title)
+#     ax.set_xlabel(xlabel)
+#     ax.set_ylabel(ylabel)
+#     ax.grid(grid, axis="y")
+#     return ax
+
+# # Revenue by category bar plot
+# def plt_revenue_by_category(df):
+#     revenue_cat = revenue_by_category(df)
+#     fig, ax = plt.subplots(figsize=(9, 4))
+#     bar(ax, revenue_cat["category"], revenue_cat["revenue"]/1000, "Revenue per category", "Category", "Revenue (kSEK)")
+#     plt.show()
+

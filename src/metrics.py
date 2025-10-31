@@ -17,7 +17,7 @@ def total_units(df: pd.DataFrame) -> int:
 
 def revenue_by_category(df: pd.DataFrame) -> pd.DataFrame:
     # Returns revenue by category
-    return df.groupby("category", observed=True)["revenue"].sum().sort_values(ascending=False).reset_index()
+    return df.groupby("category", observed=True)["revenue"].sum().sort_values(ascending=False)
 
 
 def revenue_by_city(df):
@@ -28,7 +28,7 @@ def revenue_over_time(df: pd.DataFrame, freq: str = "ME") -> pd.DataFrame:
     if freq == "M":
         freq = "ME"
     # Returns revenue over time per month
-    return df.set_index("date").resample(freq)["revenue"].sum().reset_index()
+    return df.set_index("date").resample(freq)["revenue"].sum()
 
 def order_value_std(df: pd.DataFrame) -> float:
     # Returns standard deviation (STD) of order value (If needed)
