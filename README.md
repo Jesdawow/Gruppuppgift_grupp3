@@ -2,9 +2,14 @@
 
 Här förklarar jag Gruppexamen steg för steg.
 
+Krav:
+Python Version  3.11.9
+matplotlib==3.10.7
+numpy==2.3.4
+pandas==2.3.3
+seaborn==0.13.2
+jupyter==1.1.1
 
-Krav: python
-Version  3.11.9
 Virsuellt enviroment: venv
 ## steg för steg_
 1. Klona repon från github till din lokala maskin.
