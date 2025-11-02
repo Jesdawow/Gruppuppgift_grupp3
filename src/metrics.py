@@ -19,14 +19,11 @@ def revenue_by_category(df: pd.DataFrame) -> pd.DataFrame:
     # Returns revenue by category
     return df.groupby("category", observed=True)["revenue"].sum().sort_values(ascending=False)
 
-
 def revenue_by_city(df):
     # Returns revenue by city
     return df.groupby("city", observed=True)["revenue"].sum().sort_values(ascending=False)
 
-def revenue_over_time(df: pd.DataFrame, freq: str = "ME") -> pd.DataFrame:
-    if freq == "M":
-        freq = "ME"
+def revenue_over_time(df: pd.DataFrame, freq: str = "M") -> pd.DataFrame:
     # Returns revenue over time per month
     return df.set_index("date").resample(freq)["revenue"].sum()
 
@@ -39,6 +36,9 @@ def check_revenue_integrity(df: pd.DataFrame) -> bool:
     # Controls that revenue = price * units in all rows (Not meant to be used, just to check)
     calculated = df["price"].to_numpy() * df["units"].to_numpy()
     return np.allclose(df["revenue"].to_numpy(), calculated)
+
 def average_price_by_category(df: pd.DataFrame) -> pd.Series:
     # Returns average price per category
-    return df.groupby("category", observed=True)["price"].mean().sort_values(ascending=False)
+    result = df.groupby("category", observed=True)["price"].mean().sort_values(ascending=False)
+    result = result.fillna(0)
+    return result
