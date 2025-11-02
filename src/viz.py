@@ -1,7 +1,7 @@
 # File to create all graphs & charts.
 
 import matplotlib.pyplot as plt
-from src.metrics import revenue_over_time, revenue_by_category
+from src.metrics import revenue_over_time, revenue_by_category, revenue_by_city
 import pandas as pd
 
 def _cat_for_plot(s, missing_label="Okänd"):
@@ -44,5 +44,54 @@ def plot_revenue_over_time(df):
     plt.ylabel("Intäkt (kr)")
     plt.xticks(rotation=45)
     plt.grid(True)
+    plt.tight_layout()
+    plt.show()
+
+def plot_revenue_by_city(df):
+    """
+    Ritar ett enkelt stapeldiagram som visar intäkt per stad.
+    """
+    # Gruppera efter stad och summera intäkten
+    rev_by_city = df.groupby("city", observed=True)["revenue"].sum().sort_values(ascending=False)
+
+    # Rita diagrammet
+    fig, ax = plt.subplots(figsize=(10, 5))
+    ax.bar(rev_by_city.index, rev_by_city.values, color="#1f547a", edgecolor="black")
+    ax.set_title("Intäkt per stad")
+    ax.set_xlabel("Stad")
+    ax.set_ylabel("Intäkt (SEK)")
+    ax.tick_params(axis="x", rotation=45)
+
+    # Stoppa vetenskaplig notation (1e6)
+    ax.ticklabel_format(style="plain", axis="y")
+
+    # Lägg till värden över staplarna
+    for i, v in enumerate(rev_by_city.values):
+        ax.text(i, v, f"{v:,.0f}".replace(",", " "), ha="center", va="bottom", fontsize=9)
+
+    plt.tight_layout()
+    plt.show()
+
+
+# --- Genomsnittligt pris per kategori ---
+def plot_avg_price_by_category(df):
+    """
+    Ritar ett enkelt stapeldiagram som visar genomsnittligt pris per kategori.
+    """
+    # Gruppera efter kategori och beräkna medelpris
+    avg_price = df.groupby("category", observed=True)["price"].mean().sort_values(ascending=False)
+
+    # Rita diagrammet
+    plt.figure(figsize=(10, 5))
+    plt.bar(avg_price.index, avg_price.values, color="#24a124", edgecolor="black");
+    plt.title("Genomsnittligt pris per kategori")
+    plt.xlabel("Kategori")
+    plt.ylabel("Genomsnittligt pris (SEK)")
+    plt.xticks(rotation=45)
+
+    # Lägg till värden över staplarna
+    for i, v in enumerate(avg_price.values):
+        plt.text(i, v, f"{v:,.2f}".replace(",", " "), ha="center", va="bottom", fontsize=9)
+
     plt.tight_layout()
     plt.show()
