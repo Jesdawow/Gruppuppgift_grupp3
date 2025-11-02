@@ -14,6 +14,8 @@ from src.metrics import( # Loads everything from metrics
 from src.viz import ( # Loads everything from viz
     plot_revenue_over_time,
     plt_revenue_by_category,
+    plot_revenue_by_city,
+    plot_avg_price_by_category
 )
 from src.paths import ECOMMERCE_FILE # Loads the file path from paths
 
@@ -59,3 +61,11 @@ class Ecommerce_Analysis:
         aov = average_order_value(self.data)
         std = order_value_std(self.data)
         return aov, std
+    
+    def plot_avg_price_by_category(self):
+        # Plots avg_price_by_category
+        plot_avg_price_by_category(self.data)
+
+    def plot_revenue_by_city(self):
+        # Plots revenue_by_city
+        plot_revenue_by_city(self.data)
