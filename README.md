@@ -1,12 +1,14 @@
 
-Gruppuppgift_grupp3
+# Gruppuppgift_grupp3
+
 Här förklarar jag Gruppexamen steg för steg.
 
-Krav: Python Version 3.11.9 matplotlib==3.10.7 numpy==2.3.4 pandas==2.3.3 seaborn==0.13.2 jupyter==1.1.1
+### Krav:
+Python Version 3.11.9 matplotlib==3.10.7 numpy==2.3.4 pandas==2.3.3 seaborn==0.13.2 jupyter==1.1.1
 
 Virsuellt enviroment: venv
 
-steg för steg_
+### Så går det till
 Klona repon från github till din lokala maskin. ' git clone "repo Link"
 Går in i mappen vi klonade ner. cd uppgift_grupp3
 skapa ett virtuellt enviroment python -m venv venv 4.Aktvierade vårt virtuella Windows: .\venv\Scripts\activate Mac/Linux: source venv/bin`/activate
@@ -18,7 +20,8 @@ sedag gjorde vi git push -u origin med vårt branch namn. 10 vi skapade en pull 
 När alla var klara så megrade vi alla brancher in i main branchen.
 Roller och ansvar:
 
-Vem gjort vad fins i filen skärmbilden.
+## Vem gjort vad och uppgifter...
+
 
 git initieraring av en ny repo
 
