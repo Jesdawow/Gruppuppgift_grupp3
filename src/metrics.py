@@ -39,3 +39,25 @@ def check_revenue_integrity(df: pd.DataFrame) -> bool:
     # Controls that revenue = price * units in all rows (Not meant to be used, just to check)
     calculated = df["price"].to_numpy() * df["units"].to_numpy()
     return np.allclose(df["revenue"].to_numpy(), calculated)
+
+def revenue_mismatch(df: pd.DataFrame) -> pd.DataFrame:
+    # Finds rows where revenue is not equal to price * units
+    return df[df["revenue"] != df["price"] * df["units"]]
+
+def low_revenue_categories(df: pd.DataFrame, quantile: float = 0.2) -> pd.DataFrame:
+    # Returns categories in the lowest 20% revenue
+    cat_rev = df.groupby("category", observed=True)["revenue"].sum().reset_index()
+    threshold = cat_rev["revenue"].quantile(quantile)
+    return cat_rev[cat_rev["revenue"] <= threshold].sort_values("revenue")
+
+def high_revenue_categories(df: pd.DataFrame, quantile: float = 0.8) -> pd.DataFrame:
+    # Returns categories in the highest 20% revenue
+    cat_rev = df.groupby("category", observed=True)["revenue"].sum().reset_index()
+    threshold = cat_rev["revenue"].quantile(quantile)
+    return cat_rev[cat_rev["revenue"] >= threshold].sort_values("revenue", ascending=False)
+
+def high_revenue_days(df: pd.DataFrame, quantile: float = 0.99) -> pd.DataFrame:
+    # Returns dates with the daily revenue top 1%
+    daily_rev = df.groupby("date", observed=True)["revenue"].sum().reset_index()
+    threshold = daily_rev["revenue"].quantile(quantile)
+    return daily_rev[daily_rev["revenue"] > threshold].sort_values("revenue", ascending=False)
