@@ -15,7 +15,7 @@ def total_units(df: pd.DataFrame) -> int:
     # Returns total number of units sold
     return np.sum(df["units"].to_numpy())
 
-def revenue_by_category(df: pd.DataFrame) -> pd.DataFrame:
+def revenue_by_category(df: pd.DataFrame) -> pd.Series:
     # Returns revenue by category
     return df.groupby("category", observed=True)["revenue"].sum().sort_values(ascending=False)
 
@@ -23,7 +23,9 @@ def revenue_by_city(df):
     # Returns revenue by city
     return df.groupby("city", observed=True)["revenue"].sum().sort_values(ascending=False)
 
-def revenue_over_time(df: pd.DataFrame, freq: str = "M") -> pd.DataFrame:
+def revenue_over_time(df: pd.DataFrame, freq: str = "M") -> pd.Series:
+    if freq == "M":
+        freq = "ME"
     # Returns revenue over time per month
     return df.set_index("date").resample(freq)["revenue"].sum()
 
