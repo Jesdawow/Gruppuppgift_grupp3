@@ -1,7 +1,7 @@
 # File to create all graphs & charts.
 
 import matplotlib.pyplot as plt
-from src.metrics import revenue_over_time, revenue_by_category, revenue_by_city
+from src.metrics import revenue_over_time, revenue_by_category, revenue_by_city, average_price_by_category
 import pandas as pd
 
 
@@ -57,7 +57,7 @@ def plot_revenue_by_city(df):
     Ritar ett enkelt stapeldiagram som visar intäkt per stad.
     """
     # Gruppera efter stad och summera intäkten
-    rev_by_city = df.groupby("city", observed=True)["revenue"].sum().sort_values(ascending=False)
+    rev_by_city = revenue_by_city(df)
 
     # Rita diagrammet
     fig, ax = plt.subplots(figsize=(10, 5))
@@ -85,7 +85,7 @@ def plot_avg_price_by_category(df):
     Ritar ett enkelt stapeldiagram som visar genomsnittligt pris per kategori.
     """
     # Gruppera efter kategori och beräkna medelpris
-    avg_price = df.groupby("category", observed=True)["price"].mean().sort_values(ascending=False)
+    avg_price = average_price_by_category(df)
 
     # Rita diagrammet
     plt.figure(figsize=(10, 5))
